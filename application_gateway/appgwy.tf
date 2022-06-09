@@ -23,8 +23,8 @@ resource "azurerm_application_gateway" "apgw" {
   location            = azurerm_resource_group.rg_apgw.location
 
   sku {
-    name     = "Standard_Small"
-    tier     = "Standard"
+    name     = "Standard_v2"
+    tier     = "Standard_v2"
     capacity = 2
   }
 
