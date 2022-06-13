@@ -1,3 +1,10 @@
+data "azurerm_shared_image" "docker_host" {
+  name                = "Docker-Host"
+  gallery_name        = "csasharedimages"
+  resource_group_name = "rg-shares-services"
+}
+
+
 #----------------------------------------------------------------------------
 # Create VM
 #----------------------------------------------------------------------------
@@ -21,12 +28,28 @@ resource "azurerm_linux_virtual_machine" "vm1" {
     storage_account_type = "Standard_LRS"
   }
 
-  source_image_reference {
+  source_image_id = data.azurerm_shared_image.docker_host.id
+
+/*   source_image_reference {
     publisher = "Canonical"
     offer     = "UbuntuServer"
     sku       = "16.04-LTS"
     version   = "latest"
-  }
+  } */
+}
+
+
+resource "azurerm_virtual_machine_extension" "example" {
+  name                 = "hostname"
+  virtual_machine_id   = azurerm_linux_virtual_machine.vm1.id
+  publisher            = "Microsoft.Azure.Extensions"
+  type                 = "CustomScript"
+  type_handler_version = "2.0"
+  settings = <<SETTINGS
+    {
+        "commandToExecute": "sudo chmod 666 /var/run/docker.sock"
+    }
+SETTINGS
 }
 
 
@@ -35,7 +58,7 @@ resource "azurerm_linux_virtual_machine" "vm1" {
 #----------------------------------------------------------------------------
 resource "azurerm_public_ip" "pip_vm_1" {
     name                         = "pip-vm-1"
-    location                     = "eastus"
+    location                     = "westeurope"
     resource_group_name          = azurerm_resource_group.rg_vm_1.name
     allocation_method            = "Dynamic"
 }
