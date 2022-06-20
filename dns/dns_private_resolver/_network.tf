@@ -20,6 +20,8 @@ module "snet_hub_default" {
     name            = "default"
     vnet_name       = module.vnet_hub.vnet_name
     address_space   = ["10.1.0.0/24"]
+    nsg_association = true
+    nsg_id          = module.vnet_hub.nsg_id 
 }
 
 module "snet_hub_dns_resolver_inbound" {

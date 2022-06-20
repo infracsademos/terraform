@@ -18,6 +18,18 @@ variable "address_space" {
     type        = list(string)
 }
 
+variable "nsg_id" {
+    description = "Identifier of Network Security Group."  
+    type        = string
+    default     = "0"
+}
+
+variable "nsg_association" {
+    description = "Conditional value for creation."  
+    type        = bool
+    default     = false
+}
+
 variable "tags" {
     description = "Tags to set on the bucket."
     type        = map(string)
