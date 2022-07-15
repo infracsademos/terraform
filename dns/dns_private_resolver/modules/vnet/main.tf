@@ -6,9 +6,3 @@ resource "azurerm_virtual_network" "vnet" {
 
     tags                = var.tags
 }
-
-resource "azurerm_network_security_group" "vnet_nsg" {
-    name                = var.nsg_name
-    location            = var.location
-    resource_group_name = var.rg_name
-}

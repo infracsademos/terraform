@@ -3,11 +3,6 @@ variable "vnet_name" {
     type        = string
 }
 
-variable "nsg_name" {
-    description = "Name of the Network Security Group."
-    type        = string
-}
-
 variable "rg_name" {
     description = "Name of the Resource Group."
     type        = string

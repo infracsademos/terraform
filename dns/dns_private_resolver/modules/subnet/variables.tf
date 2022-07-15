@@ -13,18 +13,18 @@ variable "rg_name" {
     type        = string
 }
 
+variable "location" {
+    description = "Location of the Virtual Network."
+    type        = string
+}
+
 variable "address_space" {
     description = "Address Space of Virtual Network."  
     type        = list(string)
 }
 
-variable "nsg_id" {
-    description = "Identifier of Network Security Group."  
-    type        = string
-    default     = "0"
-}
 
-variable "nsg_association" {
+variable "nsg" {
     description = "Conditional value for creation."  
     type        = bool
     default     = false
