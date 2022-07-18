@@ -3,14 +3,18 @@
 #######################################################################
 
 module "vnet_hub" {
-    source          = "./modules/vnet"
+    source           = "./modules/vnet"
 
-    rg_name         = azurerm_resource_group.dns_test.name
-    location        = azurerm_resource_group.dns_test.location
+    rg_name          = azurerm_resource_group.dns_test.name
+    location         = azurerm_resource_group.dns_test.location
 
-    vnet_name       = "vnet-hub"
+    vnet_name        = "vnet-hub"
     
-    address_space   = ["10.1.0.0/16"]
+    address_space    = ["10.1.0.0/16"]
+
+    peering          = true
+    remote_vnet_id   = module.vnet_spoke_1.vnet_id
+    remote_vnet_name = module.vnet_spoke_1.vnet_name
 }
 
 module "snet_hub_default" {
@@ -63,6 +67,10 @@ module "vnet_spoke_1" {
     vnet_name       = "vnet-spoke-1"
     
     address_space   = ["10.3.0.0/16"]
+
+    peering          = true
+    remote_vnet_id   = module.vnet_hub.vnet_id
+    remote_vnet_name = module.vnet_hub.vnet_name
 }
 
 module "snet_spoke_1_default" {
