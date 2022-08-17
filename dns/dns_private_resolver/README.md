@@ -1,14 +1,28 @@
 # DNS Private Resolver
 
-This repository contains various terraform modules to create a simple Azure Hub and Spoke architecture using Azure Private DNS Resolver. The architecture diagram below illustrates all components and the traffic flow.
+This repository contains various terraform modules to create a simple Azure Hub and Spoke architecture using Azure Private DNS Resolver. The architecture diagram below illustrates the components and the traffic flow.
 
-## Prerequisite
+```
+>>> insert visio picture <<<
+```
 
-tbd
+## File Structure
+
+
+## Prerequesite
+
+Before starting off with the deployment - don't forget to authenticate with the `provider.tf` file. Either using a service principal or using default Azure credentials from command line.
 
 ## Usage
 
-tbd
+```
+# Initialize terraform
+terraform init
+
+terraform plan
+
+terrafrom apply
+```
 
 ## Other resources
 

@@ -1,127 +1,134 @@
 #######################################################################
-#           HUB VNET RESOURCES
+#           HUB_001 VNET RESOURCES
 #######################################################################
 
-module "vnet_hub" {
+module "vnet_hub_001" {
     source           = "./modules/vnet"
-
     rg_name          = azurerm_resource_group.dns_test.name
     location         = azurerm_resource_group.dns_test.location
-
-    vnet_name        = "vnet-hub"
-    
-    address_space    = ["10.1.0.0/16"]
-
+    vnet_name        = local.vnet_hub_001   
+    address_space    = local.as_hub_001_vnet
     peering          = true
-    remote_vnet_id   = module.vnet_spoke_1.vnet_id
-    remote_vnet_name = module.vnet_spoke_1.vnet_name
+    remote_vnet_id   = module.vnet_spoke_001.id
+    remote_vnet_name = module.vnet_spoke_001.name
 }
 
-module "snet_hub_default" {
+module "snet_hub_001_default" {
     source          = "./modules/subnet"
     rg_name         = azurerm_resource_group.dns_test.name
     location        = azurerm_resource_group.dns_test.location
-    name            = "default"
-    vnet_name       = module.vnet_hub.vnet_name
-    address_space   = ["10.1.0.0/24"]
+    name            = local.snet_default
+    vnet_name       = module.vnet_hub_001.name
+    address_space   = local.as_hub_001_snet_default
     nsg             = true
 }
 
-module "snet_hub_dns_resolver_inbound" {
+module "snet_hub_001_pdns_resolver_inbound" {
     source          = "./modules/subnet"
     rg_name         = azurerm_resource_group.dns_test.name
     location        = azurerm_resource_group.dns_test.location
-    name            = "snet-hub-dns-resolver-inbound"
-    vnet_name       = module.vnet_hub.vnet_name
-    address_space   = ["10.1.1.0/28"]
+    name            = local.snet_pdre_i
+    vnet_name       = module.vnet_hub_001.name
+    address_space   = local.as_hub_001_snet_pdre_i
 }
 
-module "snet_hub_dns_resolver_outbound" {
+module "snet_hub_001_pdns_resolver_outbound" {
     source          = "./modules/subnet"
     rg_name         = azurerm_resource_group.dns_test.name
     location        = azurerm_resource_group.dns_test.location
-    name            = "snet-hub-dns-resolver-outbound"
-    vnet_name       = module.vnet_hub.vnet_name
-    address_space   = ["10.1.2.0/28"]
+    name            = local.snet_pdre_o
+    vnet_name       = module.vnet_hub_001.name
+    address_space   = local.as_hub_001_snet_pdre_o
 }
 
-module "snet_hub_gateway" {
+module "snet_hub_001_gateway" {
     source          = "./modules/subnet"
     rg_name         = azurerm_resource_group.dns_test.name
     location        = azurerm_resource_group.dns_test.location
-    name            = "GatewaySubnet"
-    vnet_name       = module.vnet_hub.vnet_name
-    address_space   = ["10.1.3.0/24"]
+    name            = local.snet_gw
+    vnet_name       = module.vnet_hub_001.name
+    address_space   = local.as_hub_001_snet_gw
+}
+
+module "snet_hub_001_bastion" {
+    source          = "./modules/subnet"
+    rg_name         = azurerm_resource_group.dns_test.name
+    location        = azurerm_resource_group.dns_test.location
+    name            = local.snet_bastion
+    vnet_name       = module.vnet_onprem_001.name
+    address_space   = local.as_hub_001_snet_bastion
 }
 
 #######################################################################
-#           SPOKE-1 VNET RESOURCES
+#           SPOKE_001 VNET RESOURCES
 #######################################################################
 
-module "vnet_spoke_1" {
-    source          = "./modules/vnet"
-
-    rg_name         = azurerm_resource_group.dns_test.name
-    location        = azurerm_resource_group.dns_test.location
-
-    vnet_name       = "vnet-spoke-1"
-    
-    address_space   = ["10.3.0.0/16"]
-
+module "vnet_spoke_001" {
+    source           = "./modules/vnet"
+    rg_name          = azurerm_resource_group.dns_test.name
+    location         = azurerm_resource_group.dns_test.location
+    vnet_name        = local.vnet_spoke_001
+    address_space    = local.as_spoke_001_vnet
     peering          = true
-    remote_vnet_id   = module.vnet_hub.vnet_id
-    remote_vnet_name = module.vnet_hub.vnet_name
+    remote_vnet_id   = module.vnet_hub_001.id
+    remote_vnet_name = module.vnet_hub_001.name
 }
 
 module "snet_spoke_1_default" {
     source          = "./modules/subnet"
     rg_name         = azurerm_resource_group.dns_test.name
     location        = azurerm_resource_group.dns_test.location
-    name            = "default"
-    vnet_name       = module.vnet_spoke_1.vnet_name
-    address_space   = ["10.3.0.0/24"]
+    name            = local.snet_default
+    vnet_name       = module.vnet_spoke_001.name
+    address_space   = local.as_spoke_001_snet_default
     nsg             = true
 }
 
-#######################################################################
-#           ON_PREM VNET RESOURCES
-#######################################################################
-
-module "vnet_onprem" {
-    source          = "./modules/vnet"
-
+module "snet_spoke_001_bastion" {
+    source          = "./modules/subnet"
     rg_name         = azurerm_resource_group.dns_test.name
     location        = azurerm_resource_group.dns_test.location
+    name            = local.snet_bastion
+    vnet_name       = module.vnet_onprem_001.name
+    address_space   = local.as_spoke_001_snet_bastion
+}
 
-    vnet_name       = "vnet-onprem"
-    
-    address_space   = ["10.5.0.0/16"]
+#######################################################################
+#           ONPREM_001 VNET RESOURCES
+#######################################################################
+
+module "vnet_onprem_001" {
+    source          = "./modules/vnet"
+    rg_name         = azurerm_resource_group.dns_test.name
+    location        = azurerm_resource_group.dns_test.location
+    vnet_name       = local.vnet_onprem_001  
+    address_space   = local.as_onprem_001_vnet
 }
 
 module "snet_onprem_default" {
     source          = "./modules/subnet"
     rg_name         = azurerm_resource_group.dns_test.name
     location        = azurerm_resource_group.dns_test.location
-    name            = "default"
-    vnet_name       = module.vnet_onprem.vnet_name
-    address_space   = ["10.5.0.0/24"]
+    name            = local.snet_default
+    vnet_name       = module.vnet_onprem_001.name
+    address_space   = local.as_onprem_001_snet_default
     nsg             = true
 }
 
-module "snet_onprem_gatewaysubnet" {
+module "snet_onprem_gateway" {
     source          = "./modules/subnet"
     rg_name         = azurerm_resource_group.dns_test.name
     location        = azurerm_resource_group.dns_test.location
-    name            = "GatewaySubnet"
-    vnet_name       = module.vnet_onprem.vnet_name
-    address_space   = ["10.5.1.0/24"]
+    name            = local.snet_gw
+    vnet_name       = module.vnet_onprem_001.name
+    address_space   = local.as_onprem_001_snet_gw
 }
 
 module "snet_onprem_bastion" {
     source          = "./modules/subnet"
     rg_name         = azurerm_resource_group.dns_test.name
     location        = azurerm_resource_group.dns_test.location
-    name            = "AzureBastionSubnet"
-    vnet_name       = module.vnet_onprem.vnet_name
-    address_space   = ["10.5.2.0/26"]
+    name            = local.snet_bastion
+    vnet_name       = module.vnet_onprem_001.name
+    address_space   = local.as_onprem_001_snet_bastion
 }
