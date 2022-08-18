@@ -12,6 +12,10 @@ resource "azurerm_local_network_gateway" "local_gwy" {
     resource_group_name = var.rg_name
     gateway_address     = azurerm_public_ip.pip.ip_address
     address_space       = var.peer_subnet_address_spaces
+
+    depends_on = [
+      azurerm_public_ip.pip
+    ]
 }
 
 resource "azurerm_virtual_network_gateway" "vnet_gwy" {
