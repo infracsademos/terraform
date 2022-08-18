@@ -124,7 +124,7 @@ module "snet_onprem_gateway" {
     address_space   = local.as_onprem_001_snet_gw
 }
 
-module "snet_onprem_bastion" {
+module "snet_onprem_001_bastion" {
     source          = "./modules/subnet"
     rg_name         = azurerm_resource_group.dns_test.name
     location        = azurerm_resource_group.dns_test.location
