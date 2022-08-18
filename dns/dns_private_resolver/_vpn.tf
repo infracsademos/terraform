@@ -8,7 +8,7 @@ module "vgw_hub_001" {
     subnet_id                   = module.snet_hub_001_gateway.id
 
     peer_vpn_gateway            = local.lgw_hub_001
-    peer_subnet_address_spaces  = module.vnet_hub_001.address_space
+    peer_subnet_address_spaces  = concat(module.vnet_hub_001.address_space, module.vnet_spoke_001.address_space)
 
     depends_on = [
         module.vnet_hub_001,
