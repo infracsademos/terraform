@@ -55,7 +55,7 @@ module "snet_hub_001_bastion" {
     rg_name         = azurerm_resource_group.dns_test.name
     location        = azurerm_resource_group.dns_test.location
     name            = local.snet_bastion
-    vnet_name       = module.vnet_onprem_001.name
+    vnet_name       = module.vnet_hub_001.name
     address_space   = local.as_hub_001_snet_bastion
 }
 
@@ -74,7 +74,7 @@ module "vnet_spoke_001" {
     remote_vnet_name = module.vnet_hub_001.name
 }
 
-module "snet_spoke_1_default" {
+module "snet_spoke_001_default" {
     source          = "./modules/subnet"
     rg_name         = azurerm_resource_group.dns_test.name
     location        = azurerm_resource_group.dns_test.location
@@ -89,7 +89,7 @@ module "snet_spoke_001_bastion" {
     rg_name         = azurerm_resource_group.dns_test.name
     location        = azurerm_resource_group.dns_test.location
     name            = local.snet_bastion
-    vnet_name       = module.vnet_onprem_001.name
+    vnet_name       = module.vnet_spoke_001.name
     address_space   = local.as_spoke_001_snet_bastion
 }
 

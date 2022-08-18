@@ -9,6 +9,11 @@ module "vgw_hub_001" {
 
     peer_vpn_gateway            = local.lgw_hub_001
     peer_subnet_address_spaces  = module.vnet_hub_001.address_space
+
+    depends_on = [
+        module.vnet_hub_001,
+        module.snet_hub_001_gateway
+    ]
 }
 
 module "vgw_onprem_001" {
@@ -17,11 +22,16 @@ module "vgw_onprem_001" {
     rg_name                     = azurerm_resource_group.dns_test.name
     location                    = azurerm_resource_group.dns_test.location
 
-    vnet_gwy_name               = local.lgw_onprem_001
+    vnet_gwy_name               = local.vgw_onprem_001
     subnet_id                   = module.snet_onprem_gateway.id
 
     peer_vpn_gateway            = local.lgw_onprem_001
-    peer_subnet_address_spaces  = module.vnet_hub_001.address_space
+    peer_subnet_address_spaces  = module.vnet_onprem_001.address_space
+
+    depends_on = [
+        module.vnet_onprem_001,
+        module.snet_onprem_gateway
+    ]
 }
 
 resource "azurerm_virtual_network_gateway_connection" "vnet_gwy_con_hub2onprem" {

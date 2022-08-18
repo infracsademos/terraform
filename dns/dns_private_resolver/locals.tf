@@ -1,5 +1,5 @@
 locals {
-    rg_name                 = "rg-dns-test"
+    rg_name                 = "rg-ic-learning"
     location                = "westeurope"
 
     #### HUB_001
@@ -13,14 +13,14 @@ locals {
     as_hub_001_snet_pdre_i  = ["10.1.1.0/28"]
     as_hub_001_snet_pdre_o  = ["10.1.2.0/28"]
     as_hub_001_snet_gw      = ["10.1.3.0/24"]
-    as_hub_001_snet_bastion = ["10.1.4.0/26"]
+    as_hub_001_snet_bastion = ["10.1.4.0/24"]
 
 
     #### SPOKE_001
     vnet_spoke_001              = "vnet-spoke-${local.location}-001"
     as_spoke_001_vnet           = ["10.3.0.0/16"]
     as_spoke_001_snet_default   = ["10.3.0.0/24"]
-    as_spoke_001_snet_bastion   = ["10.3.1.0/26"]
+    as_spoke_001_snet_bastion   = ["10.3.1.0/24"]
 
 
     #### ONPREM_001
@@ -30,7 +30,7 @@ locals {
     as_onprem_001_vnet           = ["10.2.0.0/16"]
     as_onprem_001_snet_default   = ["10.2.0.0/24"]
     as_onprem_001_snet_gw        = ["10.2.1.0/24"]
-    as_onprem_001_snet_bastion   = ["10.2.2.0/26"]
+    as_onprem_001_snet_bastion   = ["10.2.2.0/24"]
 
     #### SUBNETS
     snet_default            = "snet-default"
