@@ -35,6 +35,19 @@ variable "remote_vnet_id" {
     type        = string
     default     = "value"
 }
+
+variable "allow_gateway_transit" {
+    description = "Controls gatewayLinks can be used in the remote virtual network’s link to the local virtual network."  
+    type        = bool
+    default     = false
+}
+
+variable "use_remote_gateways" {
+    description = "Controls if remote gateways can be used on the local virtual network."  
+    type        = bool
+    default     = false
+}
+
 variable "tags" {
     description = "Tags to set on the bucket."
     type        = map(string)
