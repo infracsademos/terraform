@@ -4,7 +4,7 @@ resource "random_integer" "random_integer" {
 }
   
 resource "azurerm_storage_account" "storage_account" {
-  name                     = "${var.name}-${random_integer.random_integer.result}"
+  name                     = "${var.name}${random_integer.random_integer.result}"
   resource_group_name      = var.rg_name
   location                 = var.location
   account_tier             = "Standard"
