@@ -1,6 +1,6 @@
 variable "vm_user" {
   description = "Username for the Virtual Machine."
-  default     = "azueruser"
+  default     = "azureuser"
 }
 
 variable "vm_name" {

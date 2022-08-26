@@ -34,7 +34,7 @@ data "azurerm_storage_account_sas" "sas_token" {
   resource_types {
     service   = false
     container = true
-    object    = false
+    object    = true
   }
 
   services {
