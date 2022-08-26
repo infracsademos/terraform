@@ -28,7 +28,7 @@ resource "azurerm_storage_blob" "bind" {
 
 
 data "azurerm_storage_account_sas" "sas_token" {
-  connection_string = module.config_storage.connection_string
+  connection_string = azurerm_storage_account.storage_account.primary_connection_string
   https_only        = true
   signed_version    = "2017-07-29"
 
