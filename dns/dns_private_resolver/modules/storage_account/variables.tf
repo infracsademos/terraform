@@ -18,3 +18,16 @@ variable "tags" {
     type        = map(string)
     default     = {}
 }
+
+variable "start" {
+    description = "Start time for the SAS token."
+    type        = string
+    default     = "2022-08-21T00:00:00Z"
+}
+  
+variable "expiry" {
+    description = "Expiry time for the SAS token."
+    type        = string
+    default     = "2024-03-21T00:00:00Z"
+}
+  

@@ -1,3 +1,8 @@
+# data "azurerm_subscription" "current" {}
+
+/* data "azurerm_role_definition" "contributor" {
+  name = "Contributor"
+} */
 data "azurerm_shared_image" "image_gallery" {
   name                = "DNS-BIND-Server"
   gallery_name        = "csasharedimages"
@@ -17,6 +22,10 @@ resource "azurerm_linux_virtual_machine" "vm" {
 
   admin_password                    = var.admin_password
   disable_password_authentication   = false
+
+  identity {
+    type = "SystemAssigned"
+  }
 
   os_disk {
     caching              = "ReadWrite"
@@ -41,7 +50,7 @@ resource "azurerm_network_interface" "nic_vm" {
 }
 
 
-resource "azurerm_virtual_machine_extension" "dns_config" {
+/* resource "azurerm_virtual_machine_extension" "dns_config" {
   name                 = "dnsconfig"
   virtual_machine_id   = azurerm_linux_virtual_machine.vm.id
   publisher            = "Microsoft.Azure.Extensions"
@@ -60,3 +69,10 @@ SETTINGS
   }
 
 }
+ */
+ 
+/* resource "azurerm_role_assignment" "role_assignment_vm" {
+  scope              = data.azurerm_subscription.current.id
+  role_definition_id = "${data.azurerm_subscription.current.id}${data.azurerm_role_definition.contributor.id}"
+  principal_id       = azurerm_linux_virtual_machine.vm.identity[0].principal_id
+} */
