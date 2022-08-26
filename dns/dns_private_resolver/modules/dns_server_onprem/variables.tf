@@ -31,3 +31,7 @@ variable "ip_configuration_name" {
 variable "subnet_id" {
   description = "Subnet ID of the Virtual Machine."
 }
+
+variable "file_endpoint" {
+  description = "Endpoint url of config file"
+}
