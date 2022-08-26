@@ -22,7 +22,7 @@ resource "azurerm_storage_blob" "bind" {
     storage_account_name   = azurerm_storage_account.storage_account.name
     storage_container_name = azurerm_storage_container.content.name
     type                   = "Block"  
-    source                 = "../../utils/bind/named.conf.options"
+    source                 = "./utils/bind/named.conf.options"
 
 }
 
