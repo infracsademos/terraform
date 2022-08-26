@@ -8,10 +8,6 @@ module "vnet_hub_001" {
     location                = azurerm_resource_group.dns_test.location
     vnet_name               = local.vnet_hub_001   
     address_space           = local.as_hub_001_vnet
-    peering                 = true
-    remote_vnet_id          = module.vnet_spoke_001.id
-    remote_vnet_name        = module.vnet_spoke_001.name
-    allow_gateway_transit   = true
 }
 
 module "snet_hub_001_default" {
@@ -60,6 +56,20 @@ module "snet_hub_001_bastion" {
     address_space   = local.as_hub_001_snet_bastion
 }
 
+module "peering_hub_to_spoke" {
+    source              = "./modules/vnet_peering"
+    rg_name                 = azurerm_resource_group.dns_test.name
+    vnet_name               = local.vnet_hub_001   
+    remote_vnet_id          = module.vnet_spoke_001.id
+    remote_vnet_name        = module.vnet_spoke_001.name
+    allow_gateway_transit   = true
+    
+    depends_on = [
+        module.vnet_hub_001,
+        module.vgw_hub_001
+    ]
+}
+
 #######################################################################
 #           SPOKE_001 VNET RESOURCES
 #######################################################################
@@ -70,10 +80,6 @@ module "vnet_spoke_001" {
     location            = azurerm_resource_group.dns_test.location
     vnet_name           = local.vnet_spoke_001
     address_space       = local.as_spoke_001_vnet
-    peering             = true
-    remote_vnet_id      = module.vnet_hub_001.id
-    remote_vnet_name    = module.vnet_hub_001.name
-    use_remote_gateways = true
 }
 
 module "snet_spoke_001_default" {
@@ -93,6 +99,20 @@ module "snet_spoke_001_bastion" {
     name            = local.snet_bastion
     vnet_name       = module.vnet_spoke_001.name
     address_space   = local.as_spoke_001_snet_bastion
+}
+
+module "peering_spoke_to_hub" {
+    source              = "./modules/vnet_peering"
+    rg_name             = azurerm_resource_group.dns_test.name
+    vnet_name           = local.vnet_spoke_001
+    remote_vnet_id      = module.vnet_hub_001.id
+    remote_vnet_name    = module.vnet_hub_001.name
+    use_remote_gateways = true 
+    
+    depends_on = [
+        module.vnet_hub_001,
+        module.vgw_hub_001
+    ]
 }
 
 #######################################################################
