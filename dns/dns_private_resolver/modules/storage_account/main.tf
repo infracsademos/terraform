@@ -26,7 +26,6 @@ resource "azurerm_storage_blob" "bind" {
 
 }
 
-
 data "azurerm_storage_account_sas" "sas_token" {
   connection_string = azurerm_storage_account.storage_account.primary_connection_string
   https_only        = true
@@ -61,8 +60,8 @@ data "azurerm_storage_account_sas" "sas_token" {
     filter  = false
   }
 
-depends_on = [
-  azurerm_storage_account.storage_account
-]
+  depends_on = [
+    azurerm_storage_account.storage_account
+  ]
 
 }

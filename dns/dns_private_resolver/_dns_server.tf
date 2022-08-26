@@ -8,6 +8,8 @@ module "dns_server_001" {
     nic_name                = "nic-dns-server-${local.location}-001"
     ip_configuration_name   = "ip-config-dns-server-${local.location}-001"
     subnet_id               = module.snet_onprem_default.id
+
+    file_endpoint           = "${module.config_storage.blob_endpoint}/named.conf.options?${module.config_storage.sas_url_query_string}"
 }
 
 module "dns_server_002" {
@@ -20,4 +22,6 @@ module "dns_server_002" {
     nic_name                = "nic-dns-server-${local.location}-002"
     ip_configuration_name   = "ip-config-dns-server-${local.location}-002"
     subnet_id               = module.snet_onprem_default.id
+
+    file_endpoint           = "${module.config_storage.blob_endpoint}/named.conf.options?${module.config_storage.sas_url_query_string}"
 }
