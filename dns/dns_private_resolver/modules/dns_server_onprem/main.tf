@@ -50,7 +50,7 @@ resource "azurerm_network_interface" "nic_vm" {
 }
 
 
-/* resource "azurerm_virtual_machine_extension" "dns_config" {
+resource "azurerm_virtual_machine_extension" "dns_config" {
   name                 = "dnsconfig"
   virtual_machine_id   = azurerm_linux_virtual_machine.vm.id
   publisher            = "Microsoft.Azure.Extensions"
@@ -59,7 +59,7 @@ resource "azurerm_network_interface" "nic_vm" {
 
   settings = <<SETTINGS
     {
-      "commandToExecute": "sudo apt-get update && sudo apt-get install -y bind9"
+      "commandToExecute": "wget ${var.file_endpoint} && sudo rm /etc/bind/named.conf.options && sudo mv named.conf.options /etc/bind/"
     }
 SETTINGS
 
@@ -69,7 +69,6 @@ SETTINGS
   }
 
 }
- */
  
 /* resource "azurerm_role_assignment" "role_assignment_vm" {
   scope              = data.azurerm_subscription.current.id
