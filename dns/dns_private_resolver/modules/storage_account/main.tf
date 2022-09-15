@@ -18,7 +18,7 @@ resource "azurerm_storage_container" "content" {
 }
 
 resource "azurerm_storage_blob" "bind" {  
-    name                   = "name.conf.options"  
+    name                   = "named.conf.options"  
     storage_account_name   = azurerm_storage_account.storage_account.name
     storage_container_name = azurerm_storage_container.content.name
     type                   = "Block"  
@@ -26,7 +26,31 @@ resource "azurerm_storage_blob" "bind" {
 
 }
 
-data "azurerm_storage_account_sas" "sas_token" {
+# data "azurerm_storage_account_blob_container_sas" "sas_token" {
+#   connection_string = azurerm_storage_account.storage_account.primary_connection_string
+#   container_name    = azurerm_storage_container.content.name
+#   https_only        = true
+
+#   start  = var.start
+#   expiry = var.expiry
+
+#   permissions {
+#     read   = true
+#     add    = true
+#     create = false
+#     write  = false
+#     delete = true
+#     list   = true
+#   }
+
+#   depends_on = [
+#     azurerm_storage_account.storage_account
+#   ]
+
+# }
+
+
+/* data "azurerm_storage_account_sas" "sas_token" {
   connection_string = azurerm_storage_account.storage_account.primary_connection_string
   https_only        = true
   signed_version    = "2017-07-29"
@@ -64,4 +88,4 @@ data "azurerm_storage_account_sas" "sas_token" {
     azurerm_storage_account.storage_account
   ]
 
-}
+} */

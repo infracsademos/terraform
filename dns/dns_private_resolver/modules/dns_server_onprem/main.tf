@@ -49,26 +49,20 @@ resource "azurerm_network_interface" "nic_vm" {
   }
 }
 
+# resource "azurerm_virtual_machine_extension" "dns_config" {
+#   name                 = "dnsconfig"
+#   virtual_machine_id   = azurerm_linux_virtual_machine.vm.id
+#   publisher            = "Microsoft.Azure.Extensions"
+#   type                 = "CustomScript"
+#   type_handler_version = "2.0"
 
-resource "azurerm_virtual_machine_extension" "dns_config" {
-  name                 = "dnsconfig"
-  virtual_machine_id   = azurerm_linux_virtual_machine.vm.id
-  publisher            = "Microsoft.Azure.Extensions"
-  type                 = "CustomScript"
-  type_handler_version = "2.0"
+#   settings = <<SETTINGS
+#     {
+#       "commandToExecute": "sudo rm /etc/bind/named.conf.options && sudo wget -P /etc/bind  -o named.conf.options"
+#     }
+# SETTINGS
+# }
 
-  settings = <<SETTINGS
-    {
-      "commandToExecute": "sudo rm /etc/bind/named.conf.options && sudo wget -P /etc/bind \"https://saiclconfig662.blob.core.windows.net/content/name.conf.options?sp=r&st=2022-08-25T14:47:40Z&se=2022-08-26T22:47:40Z&spr=https&sv=2021-06-08&sr=c&sig=QVRmqBxFyf2Ue4Y%2FHREG%2BsyZAPPG3CVscLbCSCQaK6o%3D\""
-    }
-SETTINGS
-
-
-  tags = {
-    environment = "Production"
-  }
-
-}
  
 /* resource "azurerm_role_assignment" "role_assignment_vm" {
   scope              = data.azurerm_subscription.current.id
