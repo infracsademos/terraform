@@ -2,13 +2,13 @@
     "builders": [{
       "type": "azure-arm",
   
-      "client_id": "334c9053-dc4a-4060-9b40-2ad67d1b2877",
-      "client_secret": "P.H8Q~4JCxPrmPkyiemVb6~6P59IEkwqQt2SGcfC",
+      "client_id": "fa2081f2-7eb4-4858-babf-f0822feab9f9",
+      "client_secret": ,
       "tenant_id": "72f988bf-86f1-41af-91ab-2d7cd011db47",
       "subscription_id": "c68e72e7-620a-4c1f-b3d8-f37845401a3f",
   
       "managed_image_resource_group_name": "rg-shares-services",
-      "managed_image_name": "Linux_BIND9_DNS",
+      "managed_image_name": "Linux_BIND9_DNS_v2",
   
       "os_type": "Linux",
       "image_publisher": "Canonical",
@@ -23,17 +23,10 @@
       "location": "WEST EUROPE",
       "vm_size": "Standard_DS2_v2"
     }],
-    "provisioners": [{
-      "execute_command": "chmod +x {{ .Path }}; {{ .Vars }} sudo -E sh '{{ .Path }}'",
-      "inline": [
-        "sudo apt update",
-        
-        "sudo apt install apt-transport-https ca-certificates curl software-properties-common -y",
-        
-        "sudo apt-get install bind9 -y"
-
-      ],
-      "inline_shebang": "/bin/sh -x",
-      "type": "shell"
-    }]
+    "provisioners": [
+      {
+        "type": "shell",
+        "script": "./script.sh"
+      }
+    ]
   }
