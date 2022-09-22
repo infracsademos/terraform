@@ -20,6 +20,16 @@ module "snet_hub_001_default" {
     nsg             = true
 }
 
+module "snet_hub_001_firewall" {
+    source          = "./modules/subnet"
+    rg_name         = azurerm_resource_group.dns_test.name
+    location        = azurerm_resource_group.dns_test.location
+    name            = local.snet_firewall
+    vnet_name       = module.vnet_hub_001.name
+    address_space   = local.as_hub_001_snet_firewall
+    nsg             = false
+}
+
 module "snet_hub_001_pdns_resolver_inbound" {
     source          = "./modules/subnet"
     rg_name         = azurerm_resource_group.dns_test.name

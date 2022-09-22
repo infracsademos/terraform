@@ -25,6 +25,7 @@ locals {
     as_hub_001_snet_pdre_o  = ["10.2.2.0/28"]
     as_hub_001_snet_gw      = ["10.2.3.0/24"]
     as_hub_001_snet_bastion = ["10.2.4.0/24"]
+    as_hub_001_snet_firewall= ["10.2.5.0/24"]
     bas_hub_001             = "bas-hub-001"
     pip_bas_hub_001         = "pip-${local.bas_hub_001}"
 
@@ -40,6 +41,7 @@ locals {
     snet_default            = "snet-default"
     snet_gw                 = "GatewaySubnet"
     snet_bastion            = "AzureBastionSubnet"
+    snet_firewall           = "AzureFirewallSubnet"
 
     ### UTILS
     config_storage          = "saiclconfig"
