@@ -6,9 +6,15 @@
 data "azurerm_shared_image" "image_gallery" {
   name                = "DNS-BIND-Server"
   gallery_name        = "csasharedimages"
-  resource_group_name = "rg-shares-services"
+  resource_group_name = "rg-shares-services" 
 }
 
+data "azurerm_shared_image_version" "bind_image" {
+  name                = "0.0.2" # "recent" is also a tag to use the most recent image version
+  image_name          = data.azurerm_shared_image.image_gallery.name
+  gallery_name        = data.azurerm_shared_image.image_gallery.gallery_name
+  resource_group_name = data.azurerm_shared_image.image_gallery.resource_group_name
+}
 
 resource "azurerm_linux_virtual_machine" "vm" {
   name                  = var.vm_name
@@ -32,7 +38,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
     storage_account_type = "Standard_LRS"
   }
 
-  source_image_id = data.azurerm_shared_image.image_gallery.id
+  source_image_id = data.azurerm_shared_image_version.bind_image.id
 
 
 }
