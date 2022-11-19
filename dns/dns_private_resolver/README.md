@@ -7,7 +7,7 @@ NOT included in the deployment is the DNS Private Resolver since the terraform r
 ![Architecture](./img/architecture.png)
 
 
-The setup also deploys an Azure Firewall (not routes are added on the spoke subnets) to use it as a DNS Proxy for DNS queries from on-prem to Azure to monitoring it. The DNS proxy of the firewall needs to be configured manually. 
+The setup also deploys an Azure Firewall to use it as a DNS Proxy for DNS queries from on-prem to Azure to monitoring it. The DNS proxy of the firewall needs to be configured manually. 
 
 ![alt text](./img/architecture_fw.png)
 

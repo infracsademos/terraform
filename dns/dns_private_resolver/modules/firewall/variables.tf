@@ -1,3 +1,12 @@
+variable "fw_name" {
+  
+}
+
+variable "sku" {
+}
+
+variable "sku_name" {
+}
 variable "location" {
 }
 
