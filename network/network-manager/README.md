@@ -10,7 +10,9 @@ This repo contains a demo case to get familiar with Azure Network Manager. Pleas
   terraform init 
   ```
 
-  ```terraform providers.tf
+  Update `providers.tf` accrodingly.
+
+  ```terraform 
   ...
 
   provider "azurerm" {
