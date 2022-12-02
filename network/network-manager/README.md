@@ -10,7 +10,7 @@ This repo contains a demo case to get familiar with Azure Network Manager. Pleas
   terraform init 
   ```
 
-  ```terraform
+  ```terraform providers.tf
   ...
 
   provider "azurerm" {
@@ -37,7 +37,6 @@ This repo contains a demo case to get familiar with Azure Network Manager. Pleas
 
 - Hub and Spoke topology shall be showcased with the demo. A hub vnet and mulitple spoke vnets will be created based on the `vnet_spoke_list` in `locals.tf`. Refer to `_networks.tf`.
 - Nework Manager resource is created with `AzApi` as there is no terraform provider available yet. The Network Manager contains the envelope and creates two `network groups` in `_manager.tf`. Please configure all other features in the Azure Portal.
-- 
 
 ## Usefule Documentation Links
 
