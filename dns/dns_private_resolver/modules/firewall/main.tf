@@ -7,11 +7,11 @@ resource "azurerm_public_ip" "pip_firewall" {
 }
 
 resource "azurerm_firewall" "firewall" {
-  name                = "Test-Firewall"
+  name                = var.fw_name
   location            = var.location
   resource_group_name = var.rg_name
-  sku_name            = "AZFW_VNet"
-  sku_tier            = "Premium"
+  sku_name            = var.sku_name
+  sku_tier            = var.sku
   firewall_policy_id  = azurerm_firewall_policy.firewall_policy.id
 
   ip_configuration {
