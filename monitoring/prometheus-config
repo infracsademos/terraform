@@ -1,0 +1,8 @@
+global:
+  scrape_interval: 60s
+scrape_configs:
+  - job_name: keycloak-cluster1
+    honor_labels: true
+    scrape_interval: 30s
+    static_configs:
+      - targets: ["10.244.0.19:9091"]
