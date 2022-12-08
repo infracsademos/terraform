@@ -1,4 +1,4 @@
-# Monitoring services in AKS with Prometheus and display them in Grafana
+# Monitoring services in AKS trough Prometheus and display them in Grafana 🔍
 
 1. [Introduction](#introduction)
 2. [Prerequisites](#prerequisites)
@@ -10,7 +10,7 @@
 
 ## Introduction
 
-This tutorial shows how to monitor services in AKS with Prometheus and display them in Grafana.
+This tutorial shows how to monitor services in AKS by making use of Prometheus and display them in Grafana.
 Our sample application will be Keycloak, a popular open source identity and access management solution.
 
 ## Prerequisites
@@ -18,7 +18,7 @@ Our sample application will be Keycloak, a popular open source identity and acce
 1. Deployed AKS cluster
 2. kubectl installed and configured to connect to the AKS cluster
 
-## Deploy Prometheus
+## Deploy Prometheus 🔥
 
 > [!NOTE]
 > We use the the Prometheus Pushgateway to push the metrics from the Keycloak container to the Prometheus server. [Prometheus Pushgateway](https://github.com/prometheus/pushgateway)
@@ -65,11 +65,11 @@ Our sample application will be Keycloak, a popular open source identity and acce
         app: pushgateway
    ```
 
-## Deploy Grafana
+## Deploy Grafana 
 
 [Create an Azure Managed Grafana instance using the Azure portal](https://learn.microsoft.com/en-us/azure/managed-grafana/quickstart-managed-grafana-portal)
 
-## Deploy the sample application
+## Deploy the sample application - Keycloak 🔑
 
 > [!NOTE]
 > We use the Keycloak image from the [Aerogear project](https://github.com/aerogear/keycloak-metrics-spi) to enable the metrics endpoint.
