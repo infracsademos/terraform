@@ -20,7 +20,7 @@ Our sample application will be Keycloak, a popular open source identity and acce
 
 ## Deploy Prometheus 🔥
 
-> [!NOTE]
+> **Note**
 > We use the the Prometheus Pushgateway to push the metrics from the Keycloak container to the Prometheus server. [Prometheus Pushgateway](https://github.com/prometheus/pushgateway)
 
 1. Create a namespace for Prometheus
@@ -71,13 +71,14 @@ Our sample application will be Keycloak, a popular open source identity and acce
 
 ## Deploy the sample application - Keycloak 🔑
 
-> [!NOTE]
+> **Note**
 > We use the Keycloak image from the [Aerogear project](https://github.com/aerogear/keycloak-metrics-spi) to enable the metrics endpoint.
 
-> [!NOTE]
+> **Note**
 > The Keycloak image is not available in the Azure Container Registry. Therefore, we need to build the image locally and push it to our own ACR.
 
 1. Build the customized Keycloak image in your local folder with the following Dockerfile
+   [Dockerfile](Dockerfile)
 
    ```dockerfile
     FROM quay.io/keycloak/keycloak:latest
@@ -88,7 +89,7 @@ Our sample application will be Keycloak, a popular open source identity and acce
 
 2. Push it to your ACR
 
-3. Deploy the sample YAML
+3. Deploy the sample YAML [YAML file](keycloak.yaml)
 
    ```yaml
    apiVersion: v1
@@ -157,7 +158,7 @@ Our sample application will be Keycloak, a popular open source identity and acce
 
 ## Configure Prometheus to scrape metrics from the sample application
 
-1. Create a Prometheus Config file to scrape the metrics from the sample application
+1. Create a Prometheus Config file to scrape the metrics from the sample application [Prometheus Config](prometheus-config)
    ```yaml
    global:
      scrape_interval: 15s
