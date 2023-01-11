@@ -47,7 +47,7 @@ spec:
             - name: PROMETHEUS_PUSHGATEWAY_ADDRESS
               value: 10.244.0.19:9091
             - name: PROMETHEUS_GROUPING_KEY_INSTANCE
-              value: ENVVALUE:HOSTNAME
+              value: "customer1"
             - name: PROMETHEUS_PUSHGATEWAY_JOB
               value: "keycloak-cluster1"
             - name: "KC_HOSTNAME"
