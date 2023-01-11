@@ -1,19 +1,20 @@
 # Monitoring services in AKS trough Prometheus and display them in Grafana 🔍
 
 1. [Introduction](#introduction)
-2. [Prerequisites](#prerequisites)
-3. [Deploy Prometheus](#deploy-prometheus)
-4. [Deploy Grafana](#deploy-grafana)
-5. [Deploy the sample application](#deploy-the-sample-application)
-6. [Configure Prometheus to scrape metrics from the sample application](#configure-prometheus-to-scrape-metrics-from-the-sample-application)
-7. [Configure Grafana to display the metrics](#configure-grafana-to-display-the-metrics)
+2. [Architecture Overview](#architecture-overview)
+3. [Prerequisites](#prerequisites)
+4. [Deploy Prometheus](#deploy-prometheus)
+5. [Deploy Grafana](#deploy-grafana)
+6. [Deploy the sample application](#deploy-the-sample-application)
+7. [Configure Prometheus to scrape metrics from the sample application](#configure-prometheus-to-scrape-metrics-from-the-sample-application)
+8. [Configure Grafana to display the metrics](#configure-grafana-to-display-the-metrics)
 
 ## Introduction
 
 This tutorial shows how to monitor services in AKS by making use of Prometheus and display them in Grafana.
 Our sample application will be Keycloak, a popular open source identity and access management solution.
 
-## Archchitecture Overview
+## Architecture Overview
 
 ![Architecture Overview](Architecture-Overview.jpg)
 
@@ -145,7 +146,7 @@ Our sample application will be Keycloak, a popular open source identity and acce
                - name: PROMETHEUS_PUSHGATEWAY_ADDRESS
                value: 10.244.0.19:9091
                - name: PROMETHEUS_GROUPING_KEY_INSTANCE
-               value: ENVVALUE:HOSTNAME
+               value:  "customer1"
                - name: PROMETHEUS_PUSHGATEWAY_JOB
                value: "keycloak-customer1"
            ports:
