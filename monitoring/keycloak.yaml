@@ -50,8 +50,6 @@ spec:
               value: "customer1"
             - name: PROMETHEUS_PUSHGATEWAY_JOB
               value: "keycloak-cluster1"
-            - name: "KC_HOSTNAME"
-              value: "Customer1"
           ports:
             - name: http
               containerPort: 8080
