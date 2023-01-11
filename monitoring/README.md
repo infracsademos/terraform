@@ -13,6 +13,10 @@
 This tutorial shows how to monitor services in AKS by making use of Prometheus and display them in Grafana.
 Our sample application will be Keycloak, a popular open source identity and access management solution.
 
+## Archchitecture Overview
+
+![Architecture Overview](Architecture-Overview.jpg)
+
 ## Prerequisites
 
 1. Deployed AKS cluster
