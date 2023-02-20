@@ -1,4 +1,4 @@
-# Monitoring services in AKS trough Prometheus and display them in Grafana 🔍
+# Monitoring services in AKS by collecting metrics with Prometheus and display them in Grafana 🔍
 
 1. [Introduction](#introduction)
 2. [Architecture Overview](#architecture-overview)
@@ -70,7 +70,7 @@ Our sample application will be Keycloak, a popular open source identity and acce
         app: pushgateway
    ```
 
-## Deploy Grafana 
+## Deploy Grafana
 
 [Create an Azure Managed Grafana instance using the Azure portal](https://learn.microsoft.com/en-us/azure/managed-grafana/quickstart-managed-grafana-portal)
 

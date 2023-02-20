@@ -1,9 +1,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: keycloak-metrics
+  name: keycloak1
   labels:
-    app: keycloak-metrics
+    app: keycloak
+  namespace: customer1
 spec:
   ports:
     - name: http
@@ -16,9 +17,10 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: keycloak-metrics
+  name: keycloak1
   labels:
     app: keycloak
+  namespace: customer1
 spec:
   replicas: 1
   selector:
@@ -28,10 +30,15 @@ spec:
     metadata:
       labels:
         app: keycloak
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8080"
+        prometheus.io/scheme: "http"
+        prometheus.io/path: "/metrics"
     spec:
       containers:
         - name: keycloak
-          image: aksprometheusclusterregistry.azurecr.io/metrics-spi-keycloak:latest
+          image: quay.io/keycloak/keycloak:20.0.3
           args: ["start-dev"]
           env:
             - name: KEYCLOAK_ADMIN
@@ -44,12 +51,6 @@ spec:
               value: "true"
             - name: KC_METRICS_ENABLED
               value: "true"
-            - name: PROMETHEUS_PUSHGATEWAY_ADDRESS
-              value: 10.244.0.19:9091
-            - name: PROMETHEUS_GROUPING_KEY_INSTANCE
-              value: "customer1"
-            - name: PROMETHEUS_PUSHGATEWAY_JOB
-              value: "keycloak-cluster1"
           ports:
             - name: http
               containerPort: 8080
@@ -57,5 +58,3 @@ spec:
             httpGet:
               path: /realms/master
               port: 8080
-      imagePullSecrets:
-        - name: acr-tom
