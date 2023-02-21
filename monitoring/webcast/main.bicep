@@ -1,11 +1,23 @@
+/*
+AKS Webcast
+*/
+
+// AKS
+
 @description('The name of the Managed Cluster resource.')
 param clusterName string = 'aks-webcast-001'
 
-@description('The location of the Managed Cluster resource.')
+@description('The location of the resources.')
 param location string = resourceGroup().location
 
 @description('Optional DNS prefix to use with hosted Kubernetes API server FQDN.')
 param dnsPrefix string = clusterName
+
+@description('The subscription ID of the cluster.')
+var clusterSubscriptionId = subscription().subscriptionId
+
+@description('The resource ID of the cluster.')
+var clusterResourceId = resourceId('Microsoft.ContainerService/managedClusters', clusterName)
 
 resource aks 'Microsoft.ContainerService/managedClusters@2022-05-02-preview' = {
   name: clusterName
@@ -28,6 +40,8 @@ resource aks 'Microsoft.ContainerService/managedClusters@2022-05-02-preview' = {
   }
 }
 
+// Azure Monitor Workspace
+
 @description('The name of the Azure Monitor Workspace.')
 param workspaceName string = 'mon-webcast-001'
 
@@ -36,36 +50,10 @@ resource workspace 'microsoft.monitor/accounts@2021-06-03-preview' = {
   location: location
 }
 
-@allowed([
-  'eastus2euap'
-  'centraluseuap'
-  'centralus'
-  'eastus'
-  'eastus2'
-  'northeurope'
-  'southcentralus'
-  'southeastasia'
-  'uksouth'
-  'westeurope'
-  'westus'
-  'westus2'
-])
-param metricLabelsAllowlist string = 'westeurope'
-param metricAnnotationsAllowList string
+// Role Assignments
 
 @description('A new GUID used to identify the role assignment')
 param roleNameGuid string = newGuid()
-
-param clusterSubscriptionId string = subscription().subscriptionId
-param clusterResourceId string = resourceId('Microsoft.ContainerService/managedClusters', clusterName)
-
-var nodeRecordingRuleGroup_var = 'NodeRecordingRulesRuleGroup-'
-var nodeRecordingRuleGroupName = concat(nodeRecordingRuleGroup_var, clusterName)
-var nodeRecordingRuleGroupDescription = 'Node Recording Rules RuleGroup'
-var kubernetesRecordingRuleGroup_var = 'KubernetesReccordingRulesRuleGroup-'
-var kubernetesRecordingRuleGroupName = concat(kubernetesRecordingRuleGroup_var, clusterName)
-var kubernetesRecordingRuleGroupDescription = 'Kubernetes Recording Rules RuleGroup'
-var version = ' - 0.1'
 
 resource roleNameGuid_resource 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
   name: roleNameGuid
@@ -76,20 +64,22 @@ resource roleNameGuid_resource 'Microsoft.Authorization/roleAssignments@2022-04-
 }
 
 @description('A new GUID used to identify the role assignment')
-param roleNameGrafanaGuidAssignment string = newGuid()
+param grafanaAdminRoleAssignmentGuid string = newGuid()
 
 @secure()
 @description('Paste in your User Object ID')
 param userObjectID string
 
-resource roleNameGrafanaGuid_resource 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
-  name: roleNameGrafanaGuidAssignment
+resource grafanaAdminRoleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  name: grafanaAdminRoleAssignmentGuid
   properties: {
     roleDefinitionId: '/subscriptions/${clusterSubscriptionId}/providers/Microsoft.Authorization/roleDefinitions/22926164-76b3-42b3-bc55-97df8dab3e41'
     principalId: userObjectID
     principalType: 'User'
   }
 }
+
+// Azure Managed Grafana
 
 @description('The name of the Azure Managed Grafana instance')
 param grafanaName string = 'graf-webcast-001'
@@ -117,8 +107,10 @@ resource grafana 'Microsoft.Dashboard/grafana@2022-08-01' = {
 
 }
 
-param dceName string = 'MSProm-${location}-${clusterName}'
-param dcrName string = 'MSProm-${location}-${clusterName}'
+// Azure Managed Prometheus
+
+var dceName = 'MSProm-${location}-${clusterName}'
+var dcrName = 'MSProm-${location}-${clusterName}'
 var dcraName = 'MSProm-${location}-${clusterName}'
 
 resource dce 'Microsoft.Insights/dataCollectionEndpoints@2021-09-01-preview' = {
@@ -169,6 +161,15 @@ resource dcr 'Microsoft.Insights/dataCollectionRules@2021-09-01-preview' = {
   }
 }
 
+@description('Recording Rule and Rule Group Names')
+var nodeRecordingRuleGroup_var = 'NodeRecordingRulesRuleGroup-'
+var nodeRecordingRuleGroupName = concat(nodeRecordingRuleGroup_var, clusterName)
+var nodeRecordingRuleGroupDescription = 'Node Recording Rules RuleGroup'
+var kubernetesRecordingRuleGroup_var = 'KubernetesReccordingRulesRuleGroup-'
+var kubernetesRecordingRuleGroupName = concat(kubernetesRecordingRuleGroup_var, clusterName)
+var kubernetesRecordingRuleGroupDescription = 'Kubernetes Recording Rules RuleGroup'
+var version = ' - 0.1'
+
 module azuremonitormetrics_dcra_clusterResourceId './nested_azuremonitormetrics_dcra_clusterResourceId.bicep' = {
   name: 'azuremonitormetrics-dcra-${uniqueString(clusterResourceId)}'
   scope: resourceGroup()
@@ -183,6 +184,9 @@ module azuremonitormetrics_dcra_clusterResourceId './nested_azuremonitormetrics_
 
   ]
 }
+
+var metricLabelsAllowlist = 'westeurope'
+var metricAnnotationsAllowList = 'westeurope'
 
 module azuremonitormetrics_profile_clusterResourceId './nested_azuremonitormetrics_profile_clusterResourceId.bicep' = {
   name: 'azuremonitormetrics-profile--${uniqueString(clusterResourceId)}'
