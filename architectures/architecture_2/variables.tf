@@ -1,5 +1,5 @@
 variable "resource_group_name" {
-    default = "rg-apgw"
+    default = "rg-apgw-1"
 }
 
 variable "resource_group_location" {
