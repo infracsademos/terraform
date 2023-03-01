@@ -75,9 +75,9 @@ resource "azurerm_application_gateway" "apgw" {
 }
 
 
-resource "azurerm_network_interface_application_gateway_backend_address_pool_association" "backend_vm" {
-  network_interface_id    = azurerm_network_interface.nic_vm_backend.id
-  ip_configuration_name   = "ipconfig-vm-backend"
-  //backend_address_pool_id = azurerm_application_gateway.apgw.backend_address_pool[0].id
-  backend_address_pool_id = [for value in tolist(azurerm_application_gateway.apgw.backend_address_pool.*.id) : value if length(regexall(lower(local.backend_address_pool_name), value)) > 0][0]
-}
+# resource "azurerm_network_interface_application_gateway_backend_address_pool_association" "backend_vm" {
+#   network_interface_id    = azurerm_network_interface.nic_vm_backend.id
+#   ip_configuration_name   = "ipconfig-vm-backend"
+#   //backend_address_pool_id = azurerm_application_gateway.apgw.backend_address_pool[0].id
+#   backend_address_pool_id = [for value in tolist(azurerm_application_gateway.apgw.backend_address_pool.*.id) : value if length(regexall(lower(local.backend_address_pool_name), value)) > 0][0]
+# }
