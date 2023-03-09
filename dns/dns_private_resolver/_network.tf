@@ -111,6 +111,15 @@ module "snet_spoke_001_bastion" {
     address_space   = local.as_spoke_001_snet_bastion
 }
 
+module "snet_spoke_001_apgw" {
+    source          = "./modules/subnet"
+    rg_name         = azurerm_resource_group.dns_test.name
+    location        = azurerm_resource_group.dns_test.location
+    name            = local.snet_apgw
+    vnet_name       = module.vnet_spoke_001.name
+    address_space   = local.as_spoke_001_snet_apgw
+}
+
 module "peering_spoke_to_hub" {
     source              = "./modules/vnet_peering"
     rg_name             = azurerm_resource_group.dns_test.name
