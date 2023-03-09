@@ -4,6 +4,7 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
   resource_group_name = var.resource_group_name
   dns_prefix          = "mkutscher"
 
+  enable_auto_scaling = true
   default_node_pool {
     name       = "default"
     node_count = 1
