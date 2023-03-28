@@ -34,6 +34,7 @@ locals {
     as_spoke_001_vnet           = ["10.3.0.0/16"]
     as_spoke_001_snet_default   = ["10.3.0.0/24"]
     as_spoke_001_snet_bastion   = ["10.3.1.0/24"]
+    as_spoke_001_snet_apgw      = ["10.3.2.0/24"]
     bas_spoke_001               = "bas-spoke-001"
     pip_bas_spoke_001           = "pip-${local.bas_spoke_001}"
 
@@ -42,6 +43,7 @@ locals {
     snet_gw                 = "GatewaySubnet"
     snet_bastion            = "AzureBastionSubnet"
     snet_firewall           = "AzureFirewallSubnet"
+    snet_apgw               = "snet-apgw"
 
     ### UTILS
     config_storage          = "saiclconfig"
