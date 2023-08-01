@@ -6,7 +6,7 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
 
   default_node_pool {
     name       = "default"
-    node_count = 1
+    node_count = 2
     vm_size    = "Standard_D2_v2"
   }
 
@@ -14,8 +14,15 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
     log_analytics_workspace_id = azurerm_log_analytics_workspace.log_analytics_workspace.id
   }
 
+  azure_policy_enabled = true
+
   identity {
     type = "SystemAssigned"
+  }
+
+  network_profile {
+    network_plugin     = "kubenet"
+    load_balancer_sku  = "standard"
   }
 
   tags = {
