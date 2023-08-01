@@ -13,5 +13,12 @@ resource "azurerm_subnet" "aks-default" {
   name                 = "subnet-aks-default"
   virtual_network_name = azurerm_virtual_network.vnet_aks_demo.name
   resource_group_name  = var.resource_group_name
-  address_prefixes     = ["10.240.0.0/20"]
+  address_prefixes     = ["10.1.0.0/16"]
+}
+
+resource "azurerm_subnet" "subnet_bastion_host" {
+  name                 = "subnet-bastion-host"
+  virtual_network_name = azurerm_virtual_network.vnet_aks_demo.name
+  resource_group_name  = var.resource_group_name
+  address_prefixes     = ["10.2.0.0/16"]
 }
