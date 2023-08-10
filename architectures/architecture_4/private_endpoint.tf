@@ -16,9 +16,4 @@ resource "azurerm_private_endpoint" "sa_pe" {
         is_manual_connection           = false
     
     }
-    
-    tags = {
-        environment = "demo"
-    }
-  
 }
