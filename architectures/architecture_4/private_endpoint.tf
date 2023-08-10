@@ -10,7 +10,7 @@ resource "azurerm_private_endpoint" "sa_pe" {
     }
     
     private_service_connection {
-        name                           = "sa-pe-${azurerm_storage_account.storage.name}-connection"
+        name                           = "sa-pe-connection"
         private_connection_resource_id = azurerm_storage_account.storage.id
         subresource_names              = ["blob"]
         is_manual_connection           = false
