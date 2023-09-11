@@ -10,6 +10,7 @@ resource "azurerm_storage_account" "storage" {
   location                 = var.resource_group_location
   account_tier             = "Standard"
   account_replication_type = "LRS"
+  allow_nested_items_to_be_public = true
 
   depends_on = [ azurerm_resource_group.rg_pe_demo ]
 }
