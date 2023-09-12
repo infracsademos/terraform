@@ -17,3 +17,20 @@ spec:
       target:
         type: Utilization
         averageUtilization: 20
+  # behavior: # This is the key point.
+  #   scaleDown:
+  #     stabilizationWindowSeconds: 300 # When a scale-in is needed, observe for five minutes first. If it is still needed, perform the scale-in.
+  #     policies:
+  #     - type: Percent
+  #       value: 100 # Allow for releasing all
+  #       periodSeconds: 15
+  #   scaleUp:
+  #     stabilizationWindowSeconds: 0 # Perform a scale-out when needed
+  #     policies:
+  #     - type: Percent
+  #       value: 100
+  #       periodSeconds: 15 # Up to one time the current number of Pods can be added every 15 seconds.
+  #     - type: Pods
+  #       value: 4
+  #       periodSeconds: 15 # Up to four Pods can be added every 15 seconds.
+  #     selectPolicy: Max # Use the larger value of the two calculated based on the above two scale-out policies
