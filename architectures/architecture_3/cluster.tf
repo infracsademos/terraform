@@ -11,6 +11,9 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
     node_count            = 2
     vm_size               = "Standard_D2_v2"
     vnet_subnet_id        = azurerm_subnet.aks-default.id
+    node_labels = {
+      "type" = "default"
+    }
   }
 
   oms_agent {
@@ -37,4 +40,16 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
     azurerm_resource_group.rg-aks-demo,
     azurerm_virtual_network.vnet_aks_demo
   ]
+}
+
+
+resource "azurerm_kubernetes_cluster_node_pool" "example" {
+  name                  = "nodepool2"
+  enable_node_public_ip = false
+  kubernetes_cluster_id = azurerm_kubernetes_cluster.aks_cluster.id
+  vm_size               = "Standard_DS2_v2"
+  node_count            = 2
+  node_labels = {
+    "type" = "nodepool-2"
+  }
 }

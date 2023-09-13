@@ -16,6 +16,15 @@ spec:
         app: guestbook
         tier: frontend
     spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: type
+                operator: In
+                values:
+                - nodepool-2    
       containers:
       - name: php-redis
         image: gcr.io/google-samples/gb-frontend:v4
